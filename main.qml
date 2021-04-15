@@ -2,8 +2,10 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import Test 1.0
 import QtQuick.Controls.Material 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
-Window {
+ApplicationWindow {
     width: 640
     height: 480
     visible: true
@@ -11,6 +13,23 @@ Window {
 
     SampleModel {
         id: sampleModel
+    }
+
+    header: ToolBar {
+        RowLayout {
+            CheckBox {
+                id: horizontalLinesCheckbox
+                text: "Horizontal lines"
+            }
+            CheckBox {
+                id: verticalLinesCheckbox
+                text: "Vertical lines"
+            }
+            CheckBox {
+                id: seprateHeaderLineCheckbox
+                text: "Sepraete line"
+            }
+        }
     }
 
     DataGridView {
@@ -21,6 +40,14 @@ Window {
 
         borderColor: Material.dropShadowColor
         headerBackgroundColor: Material.backgroundColor
+
+        horizontalLines: horizontalLinesCheckbox.checked
+        verticalLines: verticalLinesCheckbox.checked
+        headerSepratorLine: seprateHeaderLineCheckbox.checked
+
+        onRowClicked: {
+            console.log('row clicked', model.id)
+        }
 
         DataGridColumn {
             role: "id"

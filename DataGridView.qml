@@ -15,6 +15,10 @@ Frame {
 
     default property list<DataGridColumn> columns
 
+    property bool horizontalLines: true
+    property bool verticalLines: true
+    property bool headerSepratorLine: horizontalLines
+
     topPadding: 1
     bottomPadding: 1
     leftPadding: 1
@@ -32,6 +36,7 @@ Frame {
         anchors.top: parent.top
         columns: root.columns
 
+        horizontalLine: root.headerSepratorLine
         borderColor: root.borderColor
         backgroundColor: root.headerBackgroundColor
     }
@@ -39,6 +44,7 @@ Frame {
     ListView {
         id: tableView
         clip: true
+        boundsBehavior: Flickable.StopAtBounds
 
         anchors {
             top: headerRow.bottom
@@ -50,6 +56,10 @@ Frame {
             header: headerRow
             columns: root.columns
             borderColor: root.borderColor
+            horizontalLine: root.horizontalLines
+            verticalLine: root.verticalLines
+
+            onClicked: root.rowClicked(model)
         }
     }
 }

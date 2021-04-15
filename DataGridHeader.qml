@@ -10,6 +10,8 @@ Rectangle {
     property alias columns: repeater.model
     property var sizes: []
     property bool isReady: false
+    property alias horizontalLine: horizontalLineRect.visible
+
     height: 50
     function get(index) {
         if (index >= repeater.count)
@@ -38,6 +40,7 @@ Rectangle {
     }
 
     Rectangle {
+        id: horizontalLineRect
         anchors {
             left: parent.left
             bottom: parent.bottom
