@@ -39,7 +39,7 @@ ApplicationWindow {
         model: sampleModel
 
         borderColor: Material.dropShadowColor
-        headerBackgroundColor: Material.backgroundColor
+        headerBackgroundColor: Material.backgroundDimColor
 
         horizontalLines: horizontalLinesCheckbox.checked
         verticalLines: verticalLinesCheckbox.checked

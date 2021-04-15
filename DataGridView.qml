@@ -39,7 +39,7 @@ Frame {
         endMargin: verticalScrollBar.width
         horizontalLine: root.headerSepratorLine
         borderColor: root.borderColor
-        backgroundColor: root.headerBackgroundColor
+        color: root.headerBackgroundColor
     }
 
     ListView {

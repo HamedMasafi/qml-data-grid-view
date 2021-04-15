@@ -6,5 +6,6 @@
         <file>DataGridRow.qml</file>
         <file>DataGridHeader.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>DataGridHeaderResizeHandler.qml</file>
     </qresource>
 </RCC>

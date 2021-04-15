@@ -18,6 +18,7 @@ ItemDelegate {
             id: layout
             property var _d: model
             anchors.fill: parent
+            spacing: header.spacing
 
             Repeater {
                 id: repeater
@@ -32,7 +33,7 @@ ItemDelegate {
                         target: label
                         when: header !== null && header.isReady
                         property: "_w"
-                        value: header.get(index).width +2
+                        value: header.get(index).width
 //                                (index == repeater.count - 1 ? 0 : header.spacing)
 //                               ((index == repeater.count - 1 || index == 0) ? header.spacing / 2 : header.spacing)
                     }
@@ -44,6 +45,11 @@ ItemDelegate {
                         elide: "ElideRight"
                         leftPadding: 4
 
+//                        Rectangle {
+//                            anchors.fill: parent
+//                            color: 'green'
+//                            opacity: .4
+//                        }
                     }
                     Rectangle {
                         visible: verticalLine //&& index > 0
@@ -51,6 +57,7 @@ ItemDelegate {
                             right: parent.right
                             bottom: parent.bottom
                             top: parent.top
+                            rightMargin: -(header.spacing / 2)
                         }
                         width: 1
                         color: borderColor
