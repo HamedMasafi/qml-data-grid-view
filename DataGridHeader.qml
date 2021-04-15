@@ -11,6 +11,8 @@ Rectangle {
     property var sizes: []
     property bool isReady: false
     property alias horizontalLine: horizontalLineRect.visible
+    property int endMargin: 0
+    property int spacing: 4
 
     height: 50
     function get(index) {
@@ -20,7 +22,15 @@ Rectangle {
     }
 
     SplitView {
+        id: splitView
         anchors.fill: parent
+        anchors.rightMargin: endMargin
+        handle: Rectangle {
+                 implicitWidth: 4
+                 implicitHeight: 4
+                 color: SplitHandle.pressed ? "#81e889"
+                     : (SplitHandle.hovered ? Qt.lighter("#c2f4c6", 1.1) : "#c2f4c6")
+             }
         Repeater {
             id: repeater
             Label {
@@ -34,9 +44,19 @@ Rectangle {
 
                 leftPadding: 4
             }
+            Component.onCompleted: console.log('spliter size', SplitHandle.width)
 
             onItemAdded: if (repeater.count === columns.length) isReady = true
         }
+    }
+    Rectangle {
+        anchors {
+            left: splitView.left
+            bottom: splitView.bottom
+            right: splitView.right
+        }
+        height: 3
+        color: 'red'
     }
 
     Rectangle {

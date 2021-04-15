@@ -36,6 +36,7 @@ Frame {
         anchors.top: parent.top
         columns: root.columns
 
+        endMargin: verticalScrollBar.width
         horizontalLine: root.headerSepratorLine
         borderColor: root.borderColor
         backgroundColor: root.headerBackgroundColor
@@ -45,7 +46,10 @@ Frame {
         id: tableView
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-
+        ScrollBar.vertical: ScrollBar{
+            id: verticalScrollBar
+            policy: ScrollBar.AlwaysOn
+        }
         anchors {
             top: headerRow.bottom
             left: parent.left
@@ -53,6 +57,7 @@ Frame {
             right: parent.right
         }
         delegate: DataGridRow {
+            width: parent=== null ? 0 : parent.width - verticalScrollBar.width
             header: headerRow
             columns: root.columns
             borderColor: root.borderColor

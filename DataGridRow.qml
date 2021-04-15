@@ -32,7 +32,9 @@ ItemDelegate {
                         target: label
                         when: header !== null && header.isReady
                         property: "_w"
-                        value: header.get(index).width
+                        value: header.get(index).width +2
+//                                (index == repeater.count - 1 ? 0 : header.spacing)
+//                               ((index == repeater.count - 1 || index == 0) ? header.spacing / 2 : header.spacing)
                     }
                     Label {
                         text: layout._d[modelData.role]
@@ -44,9 +46,9 @@ ItemDelegate {
 
                     }
                     Rectangle {
-                        visible: verticalLine && index > 0
+                        visible: verticalLine //&& index > 0
                         anchors {
-                            left: parent.left
+                            right: parent.right
                             bottom: parent.bottom
                             top: parent.top
                         }
@@ -63,6 +65,7 @@ ItemDelegate {
                 left: parent.left
                 bottom: parent.bottom
                 right: parent.right
+//                rightMargin: 2
             }
             height: 1
             color: borderColor
