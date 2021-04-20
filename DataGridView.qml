@@ -9,15 +9,16 @@ Frame {
     property color borderColor: 'red'
     property color headerBackgroundColor: 'red'
 
-    property alias model: tableView.model
+    property var model
     property alias count: tableView.count
     signal rowClicked(var model)
 
-    default property list<DataGridColumn> columns
+    default property list<DataGridColumnBase> columns
 
     property bool horizontalLines: true
     property bool verticalLines: true
     property bool headerSepratorLine: horizontalLines
+    property bool fitColumns: true
 
     topPadding: 1
     bottomPadding: 1
@@ -36,10 +37,14 @@ Frame {
         anchors.top: parent.top
         columns: root.columns
 
+        fitColumn: root.fitColumns
+
         endMargin: verticalScrollBar.width
         horizontalLine: root.headerSepratorLine
         borderColor: root.borderColor
         color: root.headerBackgroundColor
+
+        Component.onCompleted: tableView.model = root.model
     }
 
     ListView {

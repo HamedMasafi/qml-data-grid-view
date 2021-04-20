@@ -37,20 +37,39 @@ ItemDelegate {
 //                                (index == repeater.count - 1 ? 0 : header.spacing)
 //                               ((index == repeater.count - 1 || index == 0) ? header.spacing / 2 : header.spacing)
                     }
-                    Label {
-                        text: layout._d[modelData.role]
+                    Loader {
+                        source: {
+                            if (modelData instanceof DataGridColumn || modelData instanceof DataGridColumnBinding || modelData instanceof DataGridColumnCustom)
+                                return "DataGridLabel.qml"
+                            else if (modelData instanceof DataGridColumnDelegate)
+                                return "DataGridCelDelegate.qml"
+                        }
                         anchors.fill: parent
-                        verticalAlignment: "AlignVCenter"
-                        clip: true
-                        elide: "ElideRight"
-                        leftPadding: 4
-
-//                        Rectangle {
-//                            anchors.fill: parent
-//                            color: 'green'
-//                            opacity: .4
-//                        }
+                        onLoaded: {
+//                            console.log("i=", modelData, modelData instanceof DataGridColumnCustom)
+                            if (modelData instanceof DataGridColumnCustom)
+                                item.text = model.getTextEvent(layout._d)
+                            else if (modelData instanceof DataGridColumnBinding || modelData instanceof DataGridColumn)
+                                item.text = layout._d[modelData.role]
+                            else if (modelData instanceof DataGridColumnDelegate) {
+                                var newItem = modelData.delegate.createObject(item)
+//                                item.delegate = modelData.delegate
+                            }
+                        }
                     }
+
+//                    Label {
+//                        text: layout._d[modelData.role]
+//                        anchors.fill: parent
+//                        verticalAlignment: "AlignVCenter"
+//                        clip: true
+//                        elide: "ElideRight"
+//                        leftPadding: 4
+
+//                        background: Rectangle {
+//                            color: modelData.color
+//                        }
+//                    }
                     Rectangle {
                         visible: verticalLine //&& index > 0
                         anchors {

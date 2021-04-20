@@ -29,6 +29,11 @@ ApplicationWindow {
                 id: seprateHeaderLineCheckbox
                 text: "Sepraete line"
             }
+
+            CheckBox {
+                text: "Hilight second col"
+                onCheckedChanged: col2.color = checked ? 'yellow' : 'transparent'
+            }
         }
     }
 
@@ -41,6 +46,8 @@ ApplicationWindow {
         borderColor: Material.dropShadowColor
         headerBackgroundColor: Material.backgroundDimColor
 
+        fitColumns: true
+
         horizontalLines: horizontalLinesCheckbox.checked
         verticalLines: verticalLinesCheckbox.checked
         headerSepratorLine: seprateHeaderLineCheckbox.checked
@@ -49,20 +56,37 @@ ApplicationWindow {
             console.log('row clicked', model.id)
         }
 
-        DataGridColumn {
+        DataGridColumnBinding {
             role: "id"
             title: "Id"
             size: 100
+            fillWidth: true
         }
-        DataGridColumn {
+        DataGridColumnBinding {
+            id: col2
             role: "name"
             title: "Name"
             size: 100
         }
-        DataGridColumn {
+        DataGridColumnBinding {
             role: "last_name"
             title: "Last name"
             size: 100
+        }
+        DataGridColumnCustom {
+            size: 100
+            title: "Sample custom"
+            getTextEvent: function(model) {
+                return "%1-%2".arg(model.name).arg(model.last_name)
+            }
+        }
+        DataGridColumnDelegate {
+            title: "Remove button"
+            size: 30
+            delegate: Button {
+                text: "Remove"
+                anchors.fill:  parent
+            }
         }
     }
 }

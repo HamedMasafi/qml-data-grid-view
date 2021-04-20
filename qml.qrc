@@ -7,5 +7,11 @@
         <file>DataGridHeader.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>DataGridHeaderResizeHandler.qml</file>
+        <file>DataGridColumnCustom.qml</file>
+        <file>DataGridLabel.qml</file>
+        <file>DataGridColumnBase.qml</file>
+        <file>DataGridColumnBinding.qml</file>
+        <file>DataGridColumnDelegate.qml</file>
+        <file>DataGridCelDelegate.qml</file>
     </qresource>
 </RCC>

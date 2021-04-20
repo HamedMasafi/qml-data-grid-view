@@ -12,35 +12,70 @@ Rectangle {
     property alias horizontalLine: horizontalLineRect.visible
     property int endMargin: 0
     property int spacing: 4
+    property bool fitColumn: true
 
     height: 50
     function get(index) {
-        if (index >= repeater.count)
-            console.log("error")
+//        if (index >= repeater.count)
+//            console.log("error")
         return repeater.itemAt(index)
     }
-
-    SplitView {
-        id: splitView
+    Item {
         anchors.fill: parent
         anchors.rightMargin: endMargin
-        handle: DataGridHeaderResizeHandler {
-            color: borderColor
-        }
-        Repeater {
-            id: repeater
-            Label {
-                text: modelData.title
-                SplitView.fillWidth: modelData.fillWidth
-                SplitView.preferredWidth: modelData.size !== '*'
-                                          ? modelData.size : 20
-                verticalAlignment: "AlignVCenter"
-                clip: true
-                elide: "ElideRight"
 
-                leftPadding: 4
+        SplitView {
+            id: splitView
+
+            width: contentWidth
+            state: fitColumn ? "fit" : "no_fit"
+            states: [
+                State {
+                    name: "fit"
+                    AnchorChanges {
+                        target: splitView
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            bottom: parent.bottom
+                            right: parent.right
+                        }
+                    }
+                },
+                State {
+                    name: "no_fit"
+                    AnchorChanges {
+                        target: splitView
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            bottom: parent.bottom
+                        }
+                    }
+                }
+            ]
+            handle: DataGridHeaderResizeHandler {
+                color: borderColor
             }
-            onItemAdded: if (repeater.count === columns.length) isReady = true
+            Repeater {
+                id: repeater
+                Label {
+                    text: modelData.title
+                    SplitView.fillWidth: modelData.fillWidth
+                    SplitView.preferredWidth: modelData.size !== '*'
+                                              ? modelData.size : 20
+                    verticalAlignment: "AlignVCenter"
+                    clip: true
+                    elide: "ElideRight"
+
+                    leftPadding: 4
+
+                    background: Rectangle {
+                        color: modelData.color
+                    }
+                }
+                onItemAdded: if (repeater.count === columns.length) isReady = true
+            }
         }
     }
 //    Rectangle {
