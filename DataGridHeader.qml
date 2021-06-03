@@ -18,7 +18,7 @@ Rectangle {
     function get(index) {
         return (fitColumn ? repeater : repeater2).itemAt(index)
     }
-    property int actualWidth: layout.width
+    property int actualWidth: fitColumn ? width : layout.width
 
     Item {
         anchors.fill: parent

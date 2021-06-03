@@ -48,9 +48,47 @@ Frame {
         Component.onCompleted: listRepeater.model = root.model
     }
 
+    ListView {
+        id: listRepeater
+
+        anchors {
+            top: headerRow.bottom
+            left: parent.left
+            bottom: parent.bottom
+            right: parent.right
+        }
+        ScrollBar.vertical: ScrollBar{
+            id: verticalScrollBar
+            policy: ScrollBar.AlwaysOn
+        }
+        ScrollBar.horizontal: ScrollBar{
+            id: horizontalScrollBar
+            policy: ScrollBar.AsNeeded
+        }
+
+
+        headerPositioning: ListView.OverlayHeader
+        clip: true
+
+        delegate: DataGridRow {
+            width: parent == null ? 0 : (fitColumns ? parent.width : headerRow.actualWidth)
+//            width: parent.width
+            //                parent=== null ? 0 : parent.width - verticalScrollBar.width
+            header: headerRow
+            columns: root.columns
+            borderColor: root.borderColor
+            horizontalLine: root.horizontalLines
+            verticalLine: root.verticalLines
+
+            onClicked: root.rowClicked(model)
+            onDoubleClicked: root.rowDoubleClicked(model)
+        }
+    }
+/*
     Flickable {
         id: tableView
         clip: true
+        visible: false
         boundsBehavior: Flickable.StopAtBounds
         contentWidth: headerRow.actualWidth
         contentHeight: listLayout.height
@@ -76,10 +114,13 @@ Frame {
         ColumnLayout {
             id: listLayout
             spacing: 0
+            width: parent.width
+            clip: true
             Repeater {
                 id: listRepeater
                 delegate: DataGridRow {
-                    width: headerRow.actualWidth
+//                    width: fitColumns ? parent.width : headerRow.actualWidth
+                    width: parent.width
                     //                parent=== null ? 0 : parent.width - verticalScrollBar.width
                     header: headerRow
                     columns: root.columns
@@ -93,4 +134,5 @@ Frame {
             }
         }
     }
+    */
 }
