@@ -13,5 +13,6 @@
         <file>DataGridColumnBinding.qml</file>
         <file>DataGridColumnDelegate.qml</file>
         <file>DataGridCelDelegate.qml</file>
+        <file>DataGridHeaderLabel.qml</file>
     </qresource>
 </RCC>

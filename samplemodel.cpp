@@ -4,11 +4,17 @@
 
 SampleModel::SampleModel(QObject *parent) : QAbstractListModel(parent)
 {
+    fillSampleData();
+}
 
+SampleModel::~SampleModel()
+{
+    qDeleteAll(_data);
 }
 
 int SampleModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return 100;
 }
 
@@ -17,8 +23,18 @@ QVariant SampleModel::data(const QModelIndex &index, int role) const
     if (index.row() < 0 || index.row() > 100)
         return QVariant();
 
-    if (role > Qt::UserRole)
-        return QRandomGenerator::global()->bounded(0, 100);
+    auto row = _data.at(index.row());
+
+    switch (role) {
+    case  IdRole:
+        return index.row() + 1;
+
+    case NameRole:
+        return row->name;
+
+    case LastNameRole:
+        return row->lastName;
+    }
 
     return QVariant();
 }
@@ -26,8 +42,29 @@ QVariant SampleModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> SampleModel::roleNames() const
 {
     return {
-        {Qt::UserRole + 1, "id"},
-        {Qt::UserRole + 2, "name"},
-        {Qt::UserRole + 3, "last_name"}
+        {IdRole, "id"},
+        {NameRole, "name"},
+        {LastNameRole, "last_name"}
     };
+}
+
+void SampleModel::fillSampleData()
+{
+    for (int i = 0; i < 100; ++i) {
+        auto d = new DataEntry;
+        d->name = getSampleString();
+        d->lastName = getSampleString();
+        _data.append(d);
+    }
+}
+
+QString SampleModel::getSampleString() const
+{
+    static QString chars = "qwertyuiopasdfghjklzxcvbnm ";
+    auto len = QRandomGenerator::global()->bounded(4, 10);
+    QString ret;
+    for (int i = 0; i < len; ++i) {
+        ret.append(chars.midRef(QRandomGenerator::global()->bounded(0, chars.size() - 1), 1));
+    }
+    return ret;
 }

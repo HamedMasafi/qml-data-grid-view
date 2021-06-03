@@ -16,17 +16,43 @@ Rectangle {
 
     height: 50
     function get(index) {
-//        if (index >= repeater.count)
-//            console.log("error")
-        return repeater.itemAt(index)
+        return (fitColumn ? repeater : repeater2).itemAt(index)
     }
+    property int actualWidth: layout.width
+
     Item {
         anchors.fill: parent
         anchors.rightMargin: endMargin
 
+        RowLayout {
+            id: layout
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+            }
+            visible: !fitColumn
+            spacing: 4
+
+            Repeater {
+                id: repeater2
+                model: columns
+                DataGridHeaderLabel {
+                    text: modelData.title
+                    Layout.fillHeight: true
+                    Layout.fillWidth: modelData.fillWidth
+                    Layout.preferredWidth: w
+                    initialWidth: modelData.size !== '*'
+                                  ? modelData.size : 20
+                }
+                onItemAdded: if (repeater2.count === columns.length) isReady = true
+            }
+        }
+
         SplitView {
             id: splitView
-
+            clip: true
+            visible: fitColumn
             width: contentWidth
             state: fitColumn ? "fit" : "no_fit"
             states: [
@@ -50,6 +76,15 @@ Rectangle {
                             top: parent.top
                             left: parent.left
                             bottom: parent.bottom
+                        }
+                    }
+                    PropertyChanges {
+                        target: splitView
+                        width: {
+                            var _w = 0
+                            for (var i = 0; i < repeater.count; ++i)
+                                _w += repeater.itemAt(i).width
+                            return _w;
                         }
                     }
                 }
@@ -78,15 +113,6 @@ Rectangle {
             }
         }
     }
-//    Rectangle {
-//        anchors {
-//            left: splitView.left
-//            bottom: splitView.bottom
-//            right: splitView.right
-//        }
-//        height: 3
-//        color: 'red'
-//    }
 
     Rectangle {
         id: horizontalLineRect

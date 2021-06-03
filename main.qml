@@ -34,6 +34,10 @@ ApplicationWindow {
                 text: "Hilight second col"
                 onCheckedChanged: col2.color = checked ? 'yellow' : 'transparent'
             }
+            CheckBox {
+                id: fitCheckbox
+                text: "Fit columns"
+            }
         }
     }
 
@@ -46,7 +50,7 @@ ApplicationWindow {
         borderColor: Material.dropShadowColor
         headerBackgroundColor: Material.backgroundDimColor
 
-        fitColumns: true
+        fitColumns: fitCheckbox.checked
 
         horizontalLines: horizontalLinesCheckbox.checked
         verticalLines: verticalLinesCheckbox.checked
@@ -86,6 +90,7 @@ ApplicationWindow {
             delegate: Button {
                 text: "Remove"
                 anchors.fill:  parent
+                onClicked: console.log("Goint to remove ", parent.model.name, parent.model.last_name)
             }
         }
     }

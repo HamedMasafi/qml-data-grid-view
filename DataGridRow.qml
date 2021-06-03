@@ -4,8 +4,8 @@ import QtQuick.Controls 2.15
 import QtQml.Models 2.15
 
 ItemDelegate {
-    height: 40
-    width: parent == null ? 0 : parent.width
+    height: 35
+
     property alias columns: repeater.model
     property DataGridHeader header: null
     property color borderColor: 'gray'
@@ -17,7 +17,11 @@ ItemDelegate {
         RowLayout {
             id: layout
             property var _d: model
-            anchors.fill: parent
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+            }
             spacing: header.spacing
 
             Repeater {
@@ -46,13 +50,13 @@ ItemDelegate {
                         }
                         anchors.fill: parent
                         onLoaded: {
-//                            console.log("i=", modelData, modelData instanceof DataGridColumnCustom)
                             if (modelData instanceof DataGridColumnCustom)
                                 item.text = model.getTextEvent(layout._d)
                             else if (modelData instanceof DataGridColumnBinding || modelData instanceof DataGridColumn)
                                 item.text = layout._d[modelData.role]
                             else if (modelData instanceof DataGridColumnDelegate) {
                                 var newItem = modelData.delegate.createObject(item)
+                                item.model = layout._d
 //                                item.delegate = modelData.delegate
                             }
                         }
@@ -88,9 +92,9 @@ ItemDelegate {
         Rectangle {
             visible: horizontalLine
             anchors {
-                left: parent.left
+                left: layout.left
                 bottom: parent.bottom
-                right: parent.right
+                right: layout.right
 //                rightMargin: 2
             }
             height: 1

@@ -8,14 +8,25 @@ class SampleModel : public QAbstractListModel
     Q_OBJECT
 public:
     explicit SampleModel(QObject *parent = nullptr);
+    ~SampleModel();
 
-signals:
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
-
-public:
-    int rowCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const;
+private:
+    enum Roles {
+        IdRole = Qt::UserRole + 1,
+        NameRole,
+        LastNameRole
+    };
+    struct DataEntry {
+        QString name;
+        QString lastName;
+    };
+    QList<DataEntry*> _data;
+    void fillSampleData();
+    QString getSampleString() const;
 };
 
 #endif // SAMPLEMODEL_H
