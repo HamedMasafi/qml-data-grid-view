@@ -1,7 +1,6 @@
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
 #include "samplemodel.h"
-#pragma once2
 
 int main(int argc, char *argv[])
 {
