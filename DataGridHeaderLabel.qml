@@ -7,7 +7,6 @@ Item {
     property int w: handler.x + handler.width
     width: handler.x + handler.width + 4
 
-    onWChanged: console.log(w)
     property int initialWidth: 0
     onInitialWidthChanged: if (initialWidth !== 0) cell.width = initialWidth - handler.width
     Component.onCompleted: {

@@ -4,6 +4,7 @@ import Test 1.0
 import QtQuick.Controls.Material 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import Qt.labs.settings 1.1
 
 ApplicationWindow {
     width: 640
@@ -15,40 +16,68 @@ ApplicationWindow {
         id: sampleModel
     }
 
-    header: ToolBar {
-        RowLayout {
-            CheckBox {
+    Settings {
+        property alias horizontalLines: horizontalLinesCheckbox.checked
+        property alias verticalLines: verticalLinesCheckbox.checked
+        property alias seprateHeaderLine: seprateHeaderLineCheckbox.checked
+        property alias fit: fitCheckbox.checked
+    }
+
+    menuBar: MenuBar {
+        Menu {
+            title: "View"
+
+            MenuItem {
                 id: horizontalLinesCheckbox
                 text: "Horizontal lines"
+                checkable: true
             }
-            CheckBox {
+            MenuItem {
                 id: verticalLinesCheckbox
                 text: "Vertical lines"
+                checkable: true
             }
-            CheckBox {
+            MenuItem {
                 id: seprateHeaderLineCheckbox
                 text: "Sepraete line"
+                checkable: true
             }
 
-            CheckBox {
-                text: "Hilight second col"
-                onCheckedChanged: col2.color = checked ? 'yellow' : 'transparent'
-            }
-            CheckBox {
+        }
+        Menu {
+            title: "Behavior"
+
+            MenuItem {
                 id: fitCheckbox
                 text: "Fit columns"
+                checked: true
+            }
+            MenuItem {
+                text: "Hilight second col"
+                checkable: true
+                onCheckedChanged: col2.color = checked ? 'yellow' : 'transparent'
+            }
+
+            MenuSeparator {}
+
+            MenuItem {
+                text: "Show selected"
+                onClicked: {
+                    console.log(dataGridView.currentValue.name)
+                }
             }
         }
     }
 
     DataGridView {
+        id: dataGridView
         anchors.fill: parent
         anchors.margins: 9
 
         model: sampleModel
 
         borderColor: Material.dropShadowColor
-        headerBackgroundColor: Material.backgroundDimColor
+        headerBackgroundColor: 'gray'
 
         fitColumns: fitCheckbox.checked
 

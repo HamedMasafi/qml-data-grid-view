@@ -10,6 +10,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    app.setOrganizationName("Test");
+    app.setOrganizationDomain("qt.test");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     qmlRegisterType<SampleModel>("Test", 1, 0, "SampleModel");

@@ -34,6 +34,9 @@ QVariant SampleModel::data(const QModelIndex &index, int role) const
 
     case LastNameRole:
         return row->lastName;
+
+    case GroupRole:
+        return int(index.row() / 10);
     }
 
     return QVariant();
@@ -44,7 +47,8 @@ QHash<int, QByteArray> SampleModel::roleNames() const
     return {
         {IdRole, "id"},
         {NameRole, "name"},
-        {LastNameRole, "last_name"}
+        {LastNameRole, "last_name"},
+        {GroupRole, "group"}
     };
 }
 

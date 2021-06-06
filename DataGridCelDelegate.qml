@@ -7,7 +7,6 @@ Item {
 
     onDelegateChanged: {
         delegate.parent = cell
-        console.log('new delegate', delegate)
     }
     children: [delegate]
 

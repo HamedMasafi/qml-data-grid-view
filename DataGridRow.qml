@@ -22,7 +22,7 @@ ItemDelegate {
                 left: parent.left
                 bottom: parent.bottom
             }
-            spacing: header.spacing
+            spacing: header == null ? 0 : header.spacing
 
             Repeater {
                 id: repeater
@@ -35,9 +35,9 @@ ItemDelegate {
 
                     Binding {
                         target: label
-                        when: header !== null && header.isReady
+                        when: header != null && header.isReady
                         property: "_w"
-                        value: header.get(index).width
+                        value: header != null ? header.get(index).width : null
 //                                (index == repeater.count - 1 ? 0 : header.spacing)
 //                               ((index == repeater.count - 1 || index == 0) ? header.spacing / 2 : header.spacing)
                     }
@@ -62,25 +62,13 @@ ItemDelegate {
                         }
                     }
 
-//                    Label {
-//                        text: layout._d[modelData.role]
-//                        anchors.fill: parent
-//                        verticalAlignment: "AlignVCenter"
-//                        clip: true
-//                        elide: "ElideRight"
-//                        leftPadding: 4
-
-//                        background: Rectangle {
-//                            color: modelData.color
-//                        }
-//                    }
                     Rectangle {
                         visible: verticalLine //&& index > 0
                         anchors {
                             right: parent.right
                             bottom: parent.bottom
                             top: parent.top
-                            rightMargin: -(header.spacing / 2)
+                            rightMargin: header === null ? 0 : -(header.spacing / 2)
                         }
                         width: 1
                         color: borderColor

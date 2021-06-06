@@ -18,7 +18,8 @@ private:
     enum Roles {
         IdRole = Qt::UserRole + 1,
         NameRole,
-        LastNameRole
+        LastNameRole,
+        GroupRole
     };
     struct DataEntry {
         QString name;

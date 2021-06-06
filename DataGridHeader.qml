@@ -14,6 +14,9 @@ Rectangle {
     property int spacing: 4
     property bool fitColumn: true
 
+    signal finished()
+    onColumnsChanged: finished()
+
     height: 50
     function get(index) {
         return (fitColumn ? repeater : repeater2).itemAt(index)
