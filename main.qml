@@ -23,6 +23,33 @@ ApplicationWindow {
         property alias fit: fitCheckbox.checked
     }
 
+    Component {
+        id: hilightComponent
+        Rectangle {
+//            property ListView listView: null
+
+            color: 'red'
+            radius: 5
+        //    visible: (listView != null && listView.currentItem != null)
+            y: (ListView.view.currentIndex !== -1)
+               ? ListView.view.currentItem.y : 0
+
+            height: (ListView.view.currentIndex !== -1)
+               ? ListView.view.currentItem.height : 0
+
+            width: ListView.view.width
+
+            Behavior on y {
+                SpringAnimation {
+                    duration: 300
+                    spring: 3
+                    damping: 0.2
+                }
+            }
+        }
+
+    }
+
     menuBar: MenuBar {
         Menu {
             title: "View"
@@ -84,6 +111,11 @@ ApplicationWindow {
         horizontalLines: horizontalLinesCheckbox.checked
         verticalLines: verticalLinesCheckbox.checked
         headerSepratorLine: seprateHeaderLineCheckbox.checked
+
+        interactive: true
+        highlight: hilightComponent
+        keyNavigationEnabled: true
+        highlightFollowsCurrentItem: false
 
         onRowClicked: {
             console.log('row clicked', model.id)
