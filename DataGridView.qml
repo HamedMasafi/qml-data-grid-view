@@ -72,7 +72,7 @@ ListView {
 
         fitColumn: root.fitColumns
 
-        endMargin: verticalScrollBar.width
+        endMargin: 0//verticalScrollBar.width
         horizontalLine: root.headerSepratorLine
         borderColor: root.borderColor
         color: root.headerBackgroundColor
@@ -93,7 +93,7 @@ ListView {
         width: parent == null ? 0 : (fitColumns ? parent.width : root.headerRow.actualWidth)
         //            width: parent.width
         //                parent=== null ? 0 : parent.width - verticalScrollBar.width
-        z: 9
+        z: 5
         header: root.headerRow
         columns: root.columns
         borderColor: root.borderColor
