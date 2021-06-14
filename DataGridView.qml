@@ -50,6 +50,7 @@ ListView {
     ScrollBar.horizontal: ScrollBar{
         id: horizontalScrollBar
         policy: ScrollBar.AsNeeded
+        visible: !fitColumns
     }
 
     Rectangle {

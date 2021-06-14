@@ -29,13 +29,14 @@ Rectangle {
 
         RowLayout {
             id: layout
+            visible: !fitColumn
+            spacing: 4
             anchors {
                 top: parent.top
                 left: parent.left
                 bottom: parent.bottom
+                leftMargin: 4
             }
-            visible: !fitColumn
-            spacing: 4
 
             Repeater {
                 id: repeater2
@@ -57,41 +58,12 @@ Rectangle {
             clip: true
             visible: fitColumn
             width: contentWidth
-            state: fitColumn ? "fit" : "no_fit"
-            states: [
-                State {
-                    name: "fit"
-                    AnchorChanges {
-                        target: splitView
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            bottom: parent.bottom
-                            right: parent.right
-                        }
-                    }
-                },
-                State {
-                    name: "no_fit"
-                    AnchorChanges {
-                        target: splitView
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            bottom: parent.bottom
-                        }
-                    }
-                    PropertyChanges {
-                        target: splitView
-                        width: {
-                            var _w = 0
-                            for (var i = 0; i < repeater.count; ++i)
-                                _w += repeater.itemAt(i).width
-                            return _w;
-                        }
-                    }
-                }
-            ]
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+                right: parent.right
+            }
             handle: DataGridHeaderResizeHandler {
                 color: borderColor
             }

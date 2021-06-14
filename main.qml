@@ -37,7 +37,7 @@ ApplicationWindow {
             height: (ListView.view.currentIndex !== -1)
                ? ListView.view.currentItem.height : 0
 
-            width: ListView.view.width - ListView.view.ScrollBar.horizontal.width
+            width: ListView.view.width - 16
 
             Behavior on y {
                 SpringAnimation {
