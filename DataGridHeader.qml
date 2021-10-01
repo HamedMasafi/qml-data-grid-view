@@ -45,6 +45,7 @@ Rectangle {
                     Layout.fillHeight: true
                     Layout.fillWidth: modelData.fillWidth
                     Layout.preferredWidth: w
+                    visible: modelData.visible
                     initialWidth: modelData.size !== '*'
                                   ? modelData.size : 20
                 }
@@ -102,6 +103,7 @@ Rectangle {
                     SplitView.fillWidth: modelData.fillWidth
                     SplitView.preferredWidth: modelData.size !== '*'
                                               ? modelData.size : 20
+                    visible: modelData.visible
                     verticalAlignment: "AlignVCenter"
                     clip: true
                     elide: "ElideRight"

@@ -37,7 +37,7 @@ ApplicationWindow {
             height: (ListView.view.currentIndex !== -1)
                ? ListView.view.currentItem.height : 0
 
-            width: ListView.view.width - ListView.view.ScrollBar.horizontal.width
+            width: ListView.view.width - 16//ListView.view.ScrollBar.horizontal.width
 
             Behavior on y {
                 SpringAnimation {
@@ -93,6 +93,13 @@ ApplicationWindow {
                     console.log(dataGridView.currentValue.name)
                 }
             }
+
+            MenuItem {
+                id: showThirdColumnMenu
+                text: "Show third column"
+                checkable: true
+                checked: true
+            }
         }
     }
 
@@ -137,6 +144,7 @@ ApplicationWindow {
             role: "last_name"
             title: "Last name"
             size: 100
+            visible: showThirdColumnMenu.checked
         }
         DataGridColumnCustom {
             size: 100

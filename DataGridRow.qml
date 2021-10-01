@@ -32,6 +32,7 @@ ItemDelegate {
                     Layout.fillWidth: modelData.fillWidth
                     Layout.preferredWidth: _w
                     Layout.fillHeight: true
+                    visible: modelData.visible
 
                     Binding {
                         target: label
